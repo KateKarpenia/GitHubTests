@@ -8,6 +8,7 @@ import by.karpenia.pages.SettingsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -48,6 +49,22 @@ public class GitHubTests {
         loginPage.submitLogin();
 
         Thread.sleep(2000);
+
+    }
+
+    @Test
+    public void changePublicEmailInProfile() throws InterruptedException {
+        loginPage.navigationMenu().navigateProfilePage();
+        loginPage.navigationMenu().navigateSettingsPage();
+        settingsPage = new SettingsPage(driver);
+        settingsPage.profileSettings();
+        settingsPage.changePublicEmail();
+        Thread.sleep(2000);
+        settingsPage.updateProfileButton();
+
+        Thread.sleep(2000);
+        textOnAlert = driver.findElement(alertBoxLocator).getText();
+        Assert.assertEquals(Util.PROFILE_UPDATED, textOnAlert);
 
     }
 
