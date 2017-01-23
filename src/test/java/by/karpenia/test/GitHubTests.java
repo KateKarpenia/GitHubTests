@@ -1,10 +1,7 @@
 package by.karpenia.test;
 
+import by.karpenia.pages.*;
 import by.karpenia.tools.Util;
-import by.karpenia.pages.HomePage;
-import by.karpenia.pages.LoginPage;
-import by.karpenia.pages.RepositoryPage;
-import by.karpenia.pages.SettingsPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -32,6 +29,7 @@ public class GitHubTests {
     private LoginPage loginPage;
     private SettingsPage settingsPage;
     private RepositoryPage repositoryPage;
+    private RepliesPage repliesPage;
     private String textOnAlert;
 
     @BeforeClass
@@ -53,7 +51,7 @@ public class GitHubTests {
     }
 
     @Test
-    public void changePublicEmailInProfile() throws InterruptedException {
+    public void changePublicEmailInProfileTest() throws InterruptedException {
         loginPage.navigationMenu().navigateProfilePage();
         loginPage.navigationMenu().navigateSettingsPage();
         settingsPage = new SettingsPage(driver);
@@ -64,12 +62,12 @@ public class GitHubTests {
 
         Thread.sleep(2000);
         textOnAlert = driver.findElement(alertBoxLocator).getText();
-        Assert.assertEquals(Util.PROFILE_UPDATED, textOnAlert);
+        Assert.assertEquals(PROFILE_UPDATED, textOnAlert);
 
     }
 
     @Test
-    public void changeEmailPreferencesInSettings() throws InterruptedException {
+    public void changeEmailPreferencesInSettingsTest() throws InterruptedException {
 //        Thread.sleep(2000);
         loginPage.navigationMenu().navigateProfilePage();
         loginPage.navigationMenu().navigateSettingsPage();
@@ -80,21 +78,20 @@ public class GitHubTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailsPrefRadioButtonMarketingLocator));
         settingsPage.emailsPreferencesChangeRadioButton();
         settingsPage.saveEmailPreferences();
-//        settingsPage.alertBoxIsDisplayed();
         settingsPage.alertBox().alertBoxIsDisplayed();
 
         Thread.sleep(2000);
         textOnAlert = driver.findElement(alertBoxLocator).getText();
-        Assert.assertEquals(Util.SUCCESS_MESSAGE, textOnAlert);
+        Assert.assertEquals(SUCCESS_MESSAGE, textOnAlert);
 
     }
 
     @Test
-    public void newRepositoryCreateAndDelete () throws InterruptedException {
+    public void newRepositoryCreateAndDeleteTest () throws InterruptedException {
         homePage.navigationMenu().navigateCreateNew();
         homePage.navigationMenu().navigateNewRepository();
         repositoryPage = new RepositoryPage(driver);
-        repositoryPage.typeRepositoryName(Util.REPOSITORY_NAME);
+        repositoryPage.typeRepositoryName(REPOSITORY_NAME);
         Thread.sleep(2000);
 
         repositoryPage.submitNewRopository();
@@ -118,12 +115,26 @@ public class GitHubTests {
 
         repositoryPage.alertBox().alertBoxIsDisplayed();
         textOnAlert = driver.findElement(alertBoxLocator).getText();
-        Assert.assertEquals(Util.SUCCESS_DELETE, textOnAlert);
+        Assert.assertEquals(SUCCESS_DELETE, textOnAlert);
 
     }
 
+    @Test
+    public void saveRepliesTest() throws InterruptedException {
+        loginPage.navigationMenu().navigateProfilePage();
+        loginPage.navigationMenu().navigateSettingsPage();
+        repliesPage = new RepliesPage(driver);
+        repliesPage.navigationMenu().navigateSavedRepliesPage();
+        repliesPage.typeReplyTitle(REPLY_TITLE);
+        repliesPage.typeReplyBody(REPLY_BODY);
+        Thread.sleep(2000);
+        repliesPage.saveReply();
+        Thread.sleep(2000);
 
+        repliesPage.alertBox().alertBoxIsDisplayed();
+        textOnAlert = driver.findElement(alertBoxLocator).getText();
+        Assert.assertEquals(REPLY_SAVED, textOnAlert);
 
-
+    }
 
 }

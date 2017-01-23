@@ -15,5 +15,9 @@ public class Util {
     public static final String SUCCESS_DELETE = "Your repository \"GitHubTestingProject/TestRepository\" was successfully deleted.";
     public static final String REPOSITORY_NAME = "TestRepository";
     public static final String PROFILE_UPDATED = "Profile updated successfully — view your profile.";
+    public static final String REPLY_TITLE = "GitHubtestingProject_Title";
+    public static final String REPLY_BODY = "GitHubtestingProject_Body";
+    public static final String REPLY_SAVED = "Your saved reply was created successfully.";
+
 
 }

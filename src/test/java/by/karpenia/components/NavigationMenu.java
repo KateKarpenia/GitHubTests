@@ -1,9 +1,6 @@
 package by.karpenia.components;
 
-import by.karpenia.pages.HomePage;
-import by.karpenia.pages.LoginPage;
-import by.karpenia.pages.RepositoryPage;
-import by.karpenia.pages.SettingsPage;
+import by.karpenia.pages.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +20,7 @@ public class NavigationMenu {
     By navigateProfileLocator = By.xpath(".//*[@id='user-links']/li[3]/a");
     By navigateCreateNewLocator = By.xpath(".//*[@id='user-links']/li[2]/a");
     By navigateNewRepositoryLocator = By.xpath(".//*[@id='user-links']/li[2]/div/ul/a[1]");
+    By navigateSavedRepliesPage = By.xpath(".//*[@id='js-pjax-container']/div/div[1]/nav[1]/a[11]");
 
     public NavigationMenu(WebDriver driver) {
         this.driver = driver;
@@ -51,6 +49,11 @@ public class NavigationMenu {
     public RepositoryPage navigateNewRepository() {
         driver.findElement(navigateNewRepositoryLocator).click();
         return new RepositoryPage(driver);
+    }
+
+    public RepliesPage navigateSavedRepliesPage() {
+        driver.findElement(navigateSavedRepliesPage).click();
+        return new RepliesPage(driver);
     }
 
 }
