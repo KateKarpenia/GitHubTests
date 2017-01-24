@@ -22,10 +22,6 @@ public class HomePage {
         return this;
     }
 
-//    public HomePage explore() {
-//        driver.
-//    }
-
     public NavigationMenu navigationMenu() {
         return navigationMenu;
     }

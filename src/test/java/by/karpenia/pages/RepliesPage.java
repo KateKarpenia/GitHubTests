@@ -17,8 +17,6 @@ public class RepliesPage {
     By replyTitleLocator = By.xpath(".//*[@id='saved-reply-title-field']");
     By replyBodyLocator = By.xpath(".//*[@id='comment_body_1']");
     By saveReplyButtonLocator = By.xpath(".//*[@id='new_saved_reply']/div[2]/div[2]/button");
-    By editReplyButtonLocator = By.xpath(".//*[@id='js-pjax-container']/div/div[2]/div[2]/div[1]/div/div/form[1]/button");
-    By updateReplyButtonLocator = By.className("form-actions");
 
     public RepliesPage (WebDriver driver) {
 
@@ -41,16 +39,6 @@ public class RepliesPage {
 
     public RepliesPage saveReply() {
         driver.findElement(saveReplyButtonLocator).submit();
-        return new RepliesPage(driver);
-    }
-
-    public RepliesPage editReply() {
-        driver.findElement(editReplyButtonLocator).click();
-        return new RepliesPage(driver);
-    }
-
-    public RepliesPage updateReply() {
-        driver.findElement(updateReplyButtonLocator).click();
         return new RepliesPage(driver);
     }
 

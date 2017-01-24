@@ -5,9 +5,9 @@ import by.karpenia.tools.Util;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -20,7 +20,7 @@ import static by.karpenia.components.AlertBox.*;
 import static by.karpenia.pages.SettingsPage.*;
 
 /**
- * Created by Kate on 23.01.17.
+ * Created by Kate on 22.01.17.
  */
 public class GitHubTests {
 
@@ -35,6 +35,7 @@ public class GitHubTests {
     @BeforeClass
     public void setUpAndLogin () throws InterruptedException {
         System.setProperty("webdriver.gecko.driver", DRIVER_PATH);
+
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
@@ -47,7 +48,6 @@ public class GitHubTests {
         loginPage.submitLogin();
 
         Thread.sleep(2000);
-
     }
 
     @Test
@@ -68,13 +68,12 @@ public class GitHubTests {
 
     @Test
     public void changeEmailPreferencesInSettingsTest() throws InterruptedException {
-//        Thread.sleep(2000);
         loginPage.navigationMenu().navigateProfilePage();
         loginPage.navigationMenu().navigateSettingsPage();
         settingsPage = new SettingsPage(driver);
         settingsPage.emailsSettings();
 
-        WebDriverWait wait = new WebDriverWait(driver, 50);
+        WebDriverWait wait = new WebDriverWait(driver, 100);
         wait.until(ExpectedConditions.visibilityOfElementLocated(emailsPrefRadioButtonMarketingLocator));
         settingsPage.emailsPreferencesChangeRadioButton();
         settingsPage.saveEmailPreferences();
@@ -99,10 +98,10 @@ public class GitHubTests {
         repositoryPage.deleteRepository();
         Thread.sleep(2000);
 
-        String parentWindowHandler = driver.getWindowHandle(); // Store parent window
+        String parentWindowHandler = driver.getWindowHandle();
         String subWindowHandler = null;
 
-        Set<String> handles = driver.getWindowHandles(); // get all window handles
+        Set<String> handles = driver.getWindowHandles();
         Iterator<String> iterator = handles.iterator();
         while (iterator.hasNext()){
             subWindowHandler = iterator.next();
@@ -135,6 +134,11 @@ public class GitHubTests {
         textOnAlert = driver.findElement(alertBoxLocator).getText();
         Assert.assertEquals(REPLY_SAVED, textOnAlert);
 
+    }
+
+    @AfterClass
+    public void tearDown() {
+        driver.quit();
     }
 
 }
